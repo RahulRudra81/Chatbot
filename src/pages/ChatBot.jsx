@@ -1,22 +1,23 @@
 import { useState } from 'react'
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css'
 import { MainContainer, ChatContainer, MessageList, Message, MessageInput, TypingIndicator } from '@chatscope/chat-ui-kit-react'
-import './App.css'
+
+
 
 const API_KEY=import.meta.env.VITE_API_KEY
 
 
-function App() {
+const ChatBot=  ()=> {
 
   const [typing,setTyping]=useState(false)
 
   const [messages, setMessages] = useState([
     {
-      message:"Hello, I am Chicken 69",
+      message:"Hola !  This is Anny farmSense's official support. How can I help you? ",
       sender:"ChatGPT"
     }
   ])
-
+   
   const handleSend= async (message)=>{
     const newMessage={
       message:message,
@@ -46,7 +47,7 @@ function App() {
 
     const systemMessage={
       role:"system",
-      content:"speak like a pirate"
+      content:"speak like a doctor"
     }
 
     const apiRequestBody={
@@ -56,6 +57,8 @@ function App() {
         ...apiMessages
       ]
     }
+
+    console.log(API_KEY)
 
     await fetch("https://api.openai.com/v1/chat/completions",{
       method:"POST",
@@ -78,15 +81,16 @@ function App() {
       setTyping(false)
     })
   }
+  
 
   return (
     <div className="App">
-      <div style={{position:"relative",height:"800px",width:"700px"}}>
+      <div className="chatbot flex h-[350px] flex-col justify-between  lg:w-[500px]  lg:h-[600px] border-solid border-[2px] lg:m-3 m-5  " >
         <MainContainer>
           <ChatContainer>
             <MessageList
               scrollBehavior='smooth'
-              typingIndicator={typing?<TypingIndicator content="Typing"/>:null}
+              typingIndicator={typing?<TypingIndicator content="Wait"/>:null}
             >
               {messages.map((message,i)=>{
                 return <Message key={i} model={message} />
@@ -100,4 +104,4 @@ function App() {
   )
 }
 
-export default App
+export default ChatBot
